@@ -4,16 +4,13 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--n", type=int, default=5,
                     help='Threads count'),
-parser.add_argument("--l", type=int, default=0,
-                    help='Download speed limit'),
 parser.add_argument("--f", type=str, default='links.txt',
-                    help='Path to links for upload'),
+                    help='Path to links for download'),
 parser.add_argument("--o", type=str, default='uploads',
-                    help='Folder for download')
+                    help='local folder for upload data')
 args = parser.parse_args()
 
 threads_count = args.n
-speed_limit = args.l
 urls_list = args.f
 upload_folder = args.o
 total_size = 0

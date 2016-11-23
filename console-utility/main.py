@@ -4,7 +4,7 @@ import urllib.request
 import time
 
 from multiprocessing import Queue
-from config import *
+from settings import *
 
 
 queue_lock = threading.Lock()
@@ -12,12 +12,10 @@ queue = Queue()
 
 
 class DowloadWorker(threading.Thread):
-    """
-    Worker for downloading data from URL:
+    """Worker for downloading data from URL:
 
-        queue           - array of URLs for downloading
+        queue           - array of URLs for download
         queue_lock      - threading Lock object
-
     """
     def __init__(self, queue, queue_lock):
         super(DowloadWorker, self).__init__()
@@ -44,13 +42,11 @@ class DowloadWorker(threading.Thread):
         return nexturl
 
     def download_file(self, file_url, local_filename):
-        """
-        Downloading data from url to local folder.
+        """Downloading data from url to local folder.
 
             file_url            - link to download file
             local_filename      - filename for local recording
-            total_size          - total size of all downloadings
-
+            total_size          - total size of all downloads
         """
         global total_size
         file = os.path.join(UPLOAD_DIR + '/' + local_filename)
@@ -61,17 +57,15 @@ class DowloadWorker(threading.Thread):
 
 
 def main(urls_list, threads_count):
-    """
-    Main process for downloading data from URL-addresses.
+    """Main process for downloading data from URL-addresses.
     Reads a file and adds links in queue, init threads.
 
-        urls_list         - file with array of URLs for downloading
+        urls_list         - file with array of URLs for download
         threads_count     - count of threads/workers
         start             - starting process time
         end               - ending process time
-
     """
-    print("\nSTARTED\n")
+    print("\nSTARTED...\n")
     start = time.localtime()
     with open(urls_list) as links:
         for url in links:
@@ -83,7 +77,7 @@ def main(urls_list, threads_count):
     while threading.active_count() > 2:
         time.sleep(1)
 
-    print("FINISHED")
+    print("...FINISHED")
     end = time.localtime()
     print('Summary downloading size : ' +
           '%.1f mb (%s bytes)' % ((total_size / 100000), total_size))
