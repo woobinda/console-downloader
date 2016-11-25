@@ -61,7 +61,7 @@ class DownloadWorker(threading.Thread):
                     last_time = datetime.now()   # start time for writing chunk
                     filename.write(chunk)
                     time_passed = datetime.now() - last_time   # time delta
-                    if time_passed < SECOND:   # if have extra time - waiting
+                    if time_passed < SECOND:   # if have extra time - wait
                         time.sleep((SECOND - time_passed).microseconds /
                                    1000000.0)
         size = os.path.getsize(file)
@@ -93,7 +93,7 @@ def main(urls_list, threads_count, total_BANDWIDTH):
     end = time.time()   # ending process time
     print('Summary downloading size : ' +
           '%.1f mb (%s bytes)' % ((total_size / 1000000), total_size))
-    print('Total downloading time: ' + '%.2f seconds\n' % (end - start) + /
+    print('Total downloading time: ' + '%.2f seconds\n' % (end - start) + \
           '-' * 100 + '\n')
 
 
