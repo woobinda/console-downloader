@@ -1,4 +1,3 @@
 http://ladychyn.inf.ua/images/img0022.png cat1.png
 http://www.factroom.ru/facts/wp-content/uploads/2011/09/411.jpg cat2.jpg
-http://www.factroom.ru/facts/wp-content/uploads/2011/09/411.jpg cat3.jpg
 http://www.whiskas.ua/upload/user_files/7.jpg cat4.jpg
