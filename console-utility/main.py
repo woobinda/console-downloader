@@ -76,8 +76,8 @@ def main(urls_list, threads_count, total_BANDWIDTH):
         threads_count     - count of threads/workers
         BANDWIDTH         - total stream rate for all threads, byte/s
     """
-    print("\nSTARTED...\n")
-    start = time.localtime()   # starting process time
+    print('\n' + '-' * 100 + '\nSTARTED\n' + '-' * 100 + '\n\n')
+    start = time.time()   # starting process time
     with open(urls_list) as links:
         for url in links:
             queue.put(url.rstrip().split(' '))
@@ -89,15 +89,12 @@ def main(urls_list, threads_count, total_BANDWIDTH):
     while threading.active_count() > 2:
         time.sleep(1)
 
-    print("...FINISHED\n")
-    end = time.localtime()   # ending process time
-    end_mins = abs(end.tm_min - start.tm_min)
-    end_secs = abs(end.tm_sec - start.tm_sec)
+    print('-' * 100 + '\nFINISHED:\n')
+    end = time.time()   # ending process time
     print('Summary downloading size : ' +
           '%.1f mb (%s bytes)' % ((total_size / 1000000), total_size))
-    print('Total downloading time: ' + '%d min %d sec \n' % (
-        (end_mins), (end_secs))
-    )
+    print('Total downloading time: ' + '%.2f seconds\n' % (end - start) + /
+          '-' * 100 + '\n')
 
 
 if __name__ == '__main__':
