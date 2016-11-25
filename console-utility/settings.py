@@ -6,7 +6,7 @@ parser.add_argument("-n", type=int, default=5,
                     help='Threads count'),
 parser.add_argument("-f", type=str, default='links.txt',
                     help='Path to links for download'),
-parser.add_argument("-l", type=str, default='200k',
+parser.add_argument("-l", type=str, default='20m',
                     help='Download rate limit')
 parser.add_argument("-o", type=str, default='uploads',
                     help='local folder for upload data')
@@ -30,7 +30,6 @@ def calculate_BANDWIDTH(total_BANDWIDTH):
     return total_BANDWIDTH
 
 total_BANDWIDTH = calculate_BANDWIDTH(total_BANDWIDTH)
-
 
 BASE_DIR = os.path.abspath('.')
 

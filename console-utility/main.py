@@ -12,16 +12,16 @@ queue_lock = threading.Lock()
 queue = Queue()
 
 
-class DowloadWorker(threading.Thread):
+class DownloadWorker(threading.Thread):
     """Worker for downloading data from URL:
 
         queue           - array of URLs for download
         queue_lock      - threading Lock object
-        BANDWIDTH       - stream rate, kbit/s
+        BANDWIDTH       - stream rate, byte/s
     """
 
     def __init__(self, queue, queue_lock, BANDWIDTH):
-        super(DowloadWorker, self).__init__()
+        super(DownloadWorker, self).__init__()
         self.queue = queue
         self.queue_lock = queue_lock
         self.BANDWIDTH = BANDWIDTH
@@ -50,6 +50,7 @@ class DowloadWorker(threading.Thread):
 
             file_url            - link to download file
             local_filename      - filename for local recording
+            BANDWIDTH           - stream rate, byte/s
         """
         global total_size   # total size of all downloads
         SECOND = timedelta(seconds=1)
@@ -60,7 +61,7 @@ class DowloadWorker(threading.Thread):
                     last_time = datetime.now()   # start time for writing chunk
                     filename.write(chunk)
                     time_passed = datetime.now() - last_time   # time delta
-                    if time_passed < SECOND:   # if the extra time - wait
+                    if time_passed < SECOND:   # if have extra time - waiting
                         time.sleep((SECOND - time_passed).microseconds /
                                    1000000.0)
         size = os.path.getsize(file)
@@ -73,7 +74,7 @@ def main(urls_list, threads_count, total_BANDWIDTH):
 
         urls_list         - file with array of URLs for download
         threads_count     - count of threads/workers
-        BANDWIDTH         - total stream rate for all threads, kbits/s
+        BANDWIDTH         - total stream rate for all threads, byte/s
     """
     print("\nSTARTED...\n")
     start = time.localtime()   # starting process time
@@ -83,7 +84,7 @@ def main(urls_list, threads_count, total_BANDWIDTH):
 
     BANDWIDTH = total_BANDWIDTH // threads_count   # rate for a single stream
     for i in range(threads_count):
-        thread = DowloadWorker(queue, queue_lock, BANDWIDTH)
+        thread = DownloadWorker(queue, queue_lock, BANDWIDTH)
         thread.start()
     while threading.active_count() > 2:
         time.sleep(1)
